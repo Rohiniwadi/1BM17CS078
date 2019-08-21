@@ -1,4 +1,4 @@
-def smallest_element(a,k):
+def largest_element(a,k):
     for i in range(k):
         for j in range(len(a)-i-1):
             if(a[j]>a[j+1]):
@@ -7,4 +7,4 @@ def smallest_element(a,k):
        
 a=list(map(int,input().split()))
 k=int(input())
-smallest_element(a,k)
+largest_element(a,k)
