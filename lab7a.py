@@ -1,37 +1,32 @@
-f=open("one.txt","w")
-for i in range(1001):
-    if i > 1:
-       for j in range(2,i):
-           if (i % j) == 0:
-               break
-       else:
-           f.write(str(i)+" ")
-f.close()
-f=open("two.txt","w")
-f1=open("one.txt","r")
-def ishappy(n):
-    cache = []
-    while n != 1:
-        n = sum(int(i)**2 for i in str(n))
-        if n in cache:
-            return False
-        cache.append(n)
-    return True
-
-for i in range(1001):
-    if ishappy(i):
-        f.write(str(i)+" ") 
-f.close()
-f1=open("one.txt","r")
-f2=open("two.txt","r")
-s1=list(f1.read().split(" "))
-s2=list(f2.read().split(" "))
-l=[]
-for i in s1:
-    if i in s2 and i not in l:
-        l.append(i)
-print(l)
-f1.close()
-f2.close()
-        
-        
+def lcs(X, Y, m, n): 
+    L = [[0 for x in range(n+1)] for x in range(m+1)] 
+    for i in range(m+1): 
+        for j in range(n+1): 
+            if i == 0 or j == 0: 
+                L[i][j] = 0
+            elif X[i-1] == Y[j-1]: 
+                L[i][j] = L[i-1][j-1] + 1
+            else: 
+                L[i][j] = max(L[i-1][j], L[i][j-1]) 
+    index = L[m][n]
+    lcs = [""] * (index+1) 
+    lcs[index] = "" 
+    i = m 
+    j = n 
+    while i > 0 and j > 0: 
+        if X[i-1] == Y[j-1]: 
+            lcs[index-1] = X[i-1] 
+            i-=1
+            j-=1
+            index-=1
+        elif L[i-1][j] > L[i][j-1]: 
+            i-=1
+        else: 
+            j-=1
+    print("".join(lcs))
+    print(len(lcs)-1)
+X = input()
+Y = input()
+m = len(X) 
+n = len(Y) 
+lcs(X, Y, m, n) 
